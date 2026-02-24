@@ -90,6 +90,8 @@ TreeNode* Load_Tree(const char* filename) {
     TreeNode *root = NULL;
     char buffer[256];
 
+    // Reads tokens from input file one by one
+    // Iteratively attaches new nodes to their proper parent
     while (fscanf(fp, "%s", buffer) == 1) {
         TreeNode *new_node = NULL;
 
@@ -150,6 +152,7 @@ void Calculate_Dimensions(TreeNode *root) {
     TreeNode *current = root;
     TreeNode *last_visited = NULL;
 
+    // Performs iterative post-order traversal using a single stack and a last_visited
     while (current != NULL || !is_empty(&s)) {
         if (current != NULL) {
             push(&s, current);
@@ -198,6 +201,7 @@ void Calculate_Coordinates(TreeNode *root) {
     s.top = NULL;
     push(&s, root);
 
+    // Performs iterative pre-order traversal to generate coordinates from top down
     while (!is_empty(&s)) {
         TreeNode *curr = pop(&s);
 
@@ -261,6 +265,8 @@ void Save_PostOrder(TreeNode *root, const char *filename) {
     TreeNode *current = root;
     TreeNode *last_visited = NULL;
 
+    // Traverses tree iteratively in post-order to handle large trees without stack overflow
+    // Writes leaves as dimensions and internal nodes as their cut type characters to the file
     while (current != NULL || !is_empty(&s)) {
         if (current != NULL) {
             push(&s, current);
@@ -304,6 +310,8 @@ void Save_Dimensions(TreeNode *root, const char *filename) {
     TreeNode *current = root;
     TreeNode *last_visited = NULL;
 
+    // Performs post-order traversal iteratively using a stack and a pointer to last visited node
+    // Outputs calculated bounding room dimensions for every node in tree
     while (current != NULL || !is_empty(&s)) {
         if (current != NULL) {
             push(&s, current);
@@ -345,6 +353,8 @@ void Save_Packing(TreeNode *root, const char *filename) {
     s.top = NULL;
     push(&s, root);
 
+    // Performs iterative pre-order traversal by pushing right child then left child to the stack
+    // Writes out final calculated block coordinates in exact same order as the input
     while (!is_empty(&s)) {
         TreeNode *curr = pop(&s);
 
